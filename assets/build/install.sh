@@ -60,6 +60,7 @@ sed -i \
   echo "${MYSQL2_GEM}";
   echo 'gem "unicorn"';
   echo 'gem "dalli", "~> 2.7.0"';
+  echo 'gem "newrelic_rpm"';
 ) >> ${REDMINE_INSTALL_DIR}/Gemfile
 
 ## some gems complain about missing database.yml, shut them up!
@@ -104,6 +105,9 @@ sed -i \
   -e "s|access_log /var/log/nginx/access.log;|access_log ${REDMINE_LOG_DIR}/nginx/access.log;|" \
   -e "s|error_log /var/log/nginx/error.log;|error_log ${REDMINE_LOG_DIR}/nginx/error.log;|" \
   /etc/nginx/nginx.conf
+
+# for watcher users plugins
+sed -i -e "s|<= 20$|<= 200|" ${REDMINE_INSTALL_DIR}/app/helpers/issues_helper.rb
 
 # setup log rotation for redmine application logs
 cat > /etc/logrotate.d/redmine <<EOF
