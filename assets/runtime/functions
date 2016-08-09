@@ -11,6 +11,7 @@ REDMINE_UNICORN_CONFIG="${REDMINE_INSTALL_DIR}/config/unicorn.rb"
 REDMINE_SECRET_CONFIG="${REDMINE_INSTALL_DIR}/config/initializers/secret_token.rb"
 REDMINE_MEMCACHED_CONFIG="${REDMINE_INSTALL_DIR}/config/additional_environment.rb"
 REDMINE_NGINX_CONFIG="/etc/nginx/sites-enabled/redmine"
+REDMINE_NEWRELIC_CONFIG="${REDMINE_INSTALL_DIR}/config/newrelic.yml"
 
 # Read YAML file from Bash script
 # Credits: https://gist.github.com/pkuczynski/8665367
@@ -802,6 +803,7 @@ install_configuration_templates() {
   install_template ${REDMINE_USER}: redmine/database.yml ${REDMINE_DATABASE_CONFIG} 0640
   install_template ${REDMINE_USER}: redmine/unicorn.rb ${REDMINE_UNICORN_CONFIG} 0644
   install_template ${REDMINE_USER}: redmine/secret_token.rb ${REDMINE_SECRET_CONFIG} 0644
+  install_template ${REDMINE_USER}: redmine/newrelic.yml ${REDMINE_NEWRELIC_CONFIG} 0640
 
   if [[ ${REDMINE_RELATIVE_URL_ROOT} != / ]]; then
     install_template ${REDMINE_USER}: redmine/config.ru ${REDMINE_INSTALL_DIR}/config.ru 0644
